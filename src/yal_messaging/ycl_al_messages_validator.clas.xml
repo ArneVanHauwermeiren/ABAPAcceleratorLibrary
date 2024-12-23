@@ -3,23 +3,14 @@
  <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
   <asx:values>
    <VSEOCLASS>
-    <CLSNAME>YCX_AL_STATIC_CHECK</CLSNAME>
+    <CLSNAME>YCL_AL_MESSAGES_VALIDATOR</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>Exception</DESCRIPT>
-    <CATEGORY>40</CATEGORY>
+    <DESCRIPT>Message validator</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>
     <UNICODE>X</UNICODE>
    </VSEOCLASS>
-   <DESCRIPTIONS>
-    <SEOCOMPOTX>
-     <CLSNAME>YCX_AL_STATIC_CHECK</CLSNAME>
-     <CMPNAME>CONSTRUCTOR</CMPNAME>
-     <LANGU>E</LANGU>
-     <DESCRIPT>CONSTRUCTOR</DESCRIPT>
-    </SEOCOMPOTX>
-   </DESCRIPTIONS>
   </asx:values>
  </asx:abap>
 </abapGit>
