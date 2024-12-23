@@ -1,8 +1,7 @@
 CLASS ycl_al_messages_modifier DEFINITION
-  PUBLIC
-  FINAL
+  PUBLIC FINAL
   CREATE PRIVATE
-  GLOBAL FRIENDS ycl_al_messages_factory .
+  GLOBAL FRIENDS ycl_al_messages_factory.
 
   PUBLIC SECTION.
     METHODS add_message IMPORTING !messages     TYPE REF TO if_xco_messages
@@ -15,11 +14,7 @@ CLASS ycl_al_messages_modifier DEFINITION
 
     METHODS remove_duplicates IMPORTING !messages     TYPE REF TO if_xco_messages
                               RETURNING VALUE(result) TYPE REF TO if_xco_messages.
-
-  PROTECTED SECTION.
-  PRIVATE SECTION.
 ENDCLASS.
-
 
 
 CLASS ycl_al_messages_modifier IMPLEMENTATION.
@@ -34,10 +29,10 @@ CLASS ycl_al_messages_modifier IMPLEMENTATION.
 
     DATA new_messages TYPE REF TO if_xco_messages.
     LOOP AT existing_messages INTO DATA(existing_message).
-        IF NOT new ycl_al_messages_factory( )->comparator->contains( messages = new_messages
-                                                                     message  = existing_message ).
+      IF NOT NEW ycl_al_messages_factory( )->comparator->contains( messages = new_messages
+                                                                   message  = existing_message ).
 
-        ENDIF.
+      ENDIF.
     ENDLOOP.
   ENDMETHOD.
 
@@ -46,12 +41,11 @@ CLASS ycl_al_messages_modifier IMPLEMENTATION.
 
     DATA new_messages LIKE existing_messages.
     LOOP AT existing_messages INTO DATA(existing_message).
-        IF NOT new ycl_al_message_factory( )->comparator->equals( message1 = existing_message
-                                                                  message2 = message ).
-            APPEND existing_message TO new_messages.
-        ENDIF.
+      IF NOT NEW ycl_al_message_factory( )->comparator->equals( message1 = existing_message
+                                                                message2 = message ).
+        APPEND existing_message TO new_messages.
+      ENDIF.
     ENDLOOP.
     result = xco_cp=>messages( new_messages ).
   ENDMETHOD.
-
 ENDCLASS.

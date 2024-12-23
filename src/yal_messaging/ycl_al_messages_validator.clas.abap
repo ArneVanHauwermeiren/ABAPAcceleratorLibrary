@@ -1,8 +1,7 @@
 CLASS ycl_al_messages_validator DEFINITION
-  PUBLIC
-  FINAL
+  PUBLIC FINAL
   CREATE PRIVATE
-  GLOBAL FRIENDS ycl_al_messages_factory .
+  GLOBAL FRIENDS ycl_al_messages_factory.
 
   PUBLIC SECTION.
     METHODS has_errors IMPORTING !messages     TYPE REF TO if_xco_messages
@@ -16,8 +15,9 @@ CLASS ycl_al_messages_validator DEFINITION
 
     METHODS has_successes IMPORTING !messages     TYPE REF TO if_xco_messages
                           RETURNING VALUE(result) TYPE abap_boolean.
-    METHODS get_messages_of_type IMPORTING !messages TYPE REF TO if_xco_messages
-                                           !type TYPE REF TO cl_xco_message_type
+
+    METHODS get_messages_of_type IMPORTING !messages     TYPE REF TO if_xco_messages
+                                           !type         TYPE REF TO cl_xco_message_type
                                  RETURNING VALUE(result) TYPE REF TO if_xco_messages.
 ENDCLASS.
 
@@ -61,9 +61,10 @@ CLASS ycl_al_messages_validator IMPLEMENTATION.
 
   METHOD get_messages_of_type.
     DATA new_messages TYPE sxco_t_messages.
+
     LOOP AT messages->value INTO DATA(message).
       IF message->get_type( ) = type.
-        APPEND message to new_messages.
+        APPEND message TO new_messages.
       ENDIF.
     ENDLOOP.
 

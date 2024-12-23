@@ -1,16 +1,12 @@
 CLASS ycl_al_message_converter DEFINITION
-  PUBLIC
-  FINAL
+  PUBLIC FINAL
   CREATE PRIVATE
-  GLOBAL FRIENDS ycl_al_message_factory .
+  GLOBAL FRIENDS ycl_al_message_factory.
 
   PUBLIC SECTION.
-    METHODS bapiret2_to_symsg IMPORTING bapiret2 TYPE bapiret2
+    METHODS bapiret2_to_symsg IMPORTING bapiret2      TYPE bapiret2
                               RETURNING VALUE(result) TYPE symsg.
-  PROTECTED SECTION.
-  PRIVATE SECTION.
 ENDCLASS.
-
 
 
 CLASS ycl_al_message_converter IMPLEMENTATION.
