@@ -1,50 +1,74 @@
 ```mermaid
-%%{init: {'theme': 'base', 'themeVariables': {
-    'primaryColor': '#1E90FF',     // Capgemini blue
-    'primaryTextColor': '#FFFFFF', // White text
-    'lineColor': '#4D4D4D',        // Dark gray for lines
-    'secondaryColor': '#F0F0F0',   // Light gray for backgrounds
-    'tertiaryColor': '#0070AD'     // Darker Capgemini blue for highlights
-}}}%%
+
 classDiagram
-    class ycl_al_message_factory {
-        +factory : ycl_al_message_factory
-        +create_from_bapiret2(bapiret2)
-        +create_from_variables(id, nr, ty, v1, v2, v3, v4)
-    }
-    class ycl_al_message {
-        +bapiret2
-        +constructor(bapiret2)
-        +get_text()
-        +get_long_text()
-        +is_error()
-        <<interface>> if_message
-    }
-    class ycl_al_message_type {
-        <<enumeration>>
-        +success
-        +warning
-        +error
-        +abort
-        +undefined
-    }
-    class ycx_al_static_check {
-        +messages
-        +constructor(textid, previous, ty, v1, v2, v3, v4, messages)
-        +get_as_bapiret2()
-        <<interface>> if_t100_dyn_msg
-        <<interface>> if_t100_message
-        <<inherit>> cx_static_check
-    }
-    class ycl_al_message_collection {
-        +messages
-        +add_message(message)
-        +get_messages_by_type(type)
-        +to_bapirettab()
-        +has_errors()
-    }
-    ycl_al_message_factory ..> ycl_al_message: creates
-    ycl_al_message_collection o-- "*" ycl_al_message: contains
-    ycl_al_message ..> ycl_al_message_type: uses
-    ycx_al_static_check ..> ycl_al_message_type: uses
+class ycl_al_message_comparator {
+    +equals(message1: if_xco_message, message2: if_xco_message) abap_boolean
+}
+
+class ycl_al_message_converter {
+    +bapiret2_to_symsg(bapiret2: bapiret2) symsg
+}
+
+class ycl_al_message_factory {
+    +validator: ycl_al_message_validator
+    +comparator: ycl_al_message_comparator
+    +converter: ycl_al_message_converter
+    +constructor()
+    +create(symsg: symsg) if_xco_message
+}
+
+class ycl_al_message_validator {
+    +is_error(message: if_xco_message) abap_boolean
+    +is_warning(message: if_xco_message) abap_boolean
+    +is_success(message: if_xco_message) abap_boolean
+    +is_information(message: if_xco_message) abap_boolean
+    +is_type(message: if_xco_message, type: cl_xco_message_type) abap_boolean
+}
+
+class ycl_al_messages_comparator {
+    +equals(messages1: if_xco_messages, messages2: if_xco_messages) abap_boolean
+    +contains(messages: if_xco_messages, message: if_xco_message) abap_boolean
+}
+
+class ycl_al_messages_converter {
+    +bapirettab_to_sxco_t_messages(bapirettab: bapirettab) sxco_t_messages
+}
+
+class ycl_al_messages_factory {
+    +validator: ycl_al_messages_validator
+    +comparator: ycl_al_messages_comparator
+    +converter: ycl_al_messages_converter
+    +modifier: ycl_al_messages_modifier
+    +constructor()
+    +create(sxco_t_messages: sxco_t_messages) if_xco_messages
+}
+
+class ycl_al_messages_modifier {
+    +add_message(messages: if_xco_messages, message: if_xco_message) if_xco_messages
+    +remove_message(messages: if_xco_messages, message: if_xco_message) if_xco_messages
+    +remove_duplicates(messages: if_xco_messages) if_xco_messages
+}
+
+class ycl_al_messages_validator {
+    +has_errors(messages: if_xco_messages) abap_boolean
+    +has_warnings(messages: if_xco_messages) abap_boolean
+    +has_informations(messages: if_xco_messages) abap_boolean
+    +has_successes(messages: if_xco_messages) abap_boolean
+    +get_messages_of_type(messages: if_xco_messages, type: cl_xco_message_type) if_xco_messages
+}
+
+ycl_al_message_factory --> ycl_al_message_validator : validator
+ycl_al_message_factory --> ycl_al_message_comparator : comparator
+ycl_al_message_factory --> ycl_al_message_converter : converter
+
+ycl_al_messages_factory --> ycl_al_messages_validator : validator
+ycl_al_messages_factory --> ycl_al_messages_comparator : comparator
+ycl_al_messages_factory --> ycl_al_messages_converter : converter
+ycl_al_messages_factory --> ycl_al_messages_modifier : modifier
+
+ycl_al_messages_comparator --> ycl_al_message_factory : comparator
+
+ycl_al_messages_modifier --> ycl_al_message_factory : comparator
+
+ycl_al_messages_validator --> ycl_al_message_factory : validator
 ```
