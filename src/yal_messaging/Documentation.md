@@ -73,94 +73,216 @@ ycl_al_messages_modifier --> ycl_al_message_factory : comparator
 
 ycl_al_messages_validator --> ycl_al_message_factory : validator
 ```
+Sure! Here is the updated markdown documentation with a table of contents and method parameters along with their types:
 
-# ABAP Classes Documentation
+# ABAP Messaging Demo Class Documentation
 
-This documentation provides an overview of the ABAP classes and their relationships as depicted in the Mermaid UML diagram.
+This documentation provides examples of how to use the messaging classes in ABAP, as demonstrated in the `ycl_al_messaging_demo` class.
 
-## Classes Overview
+## Table of Contents
 
-### ycl_al_message_comparator
-This class is responsible for comparing two messages.
+- [create_message](#create_message)
+- create_message_from_bapiret2
+- is_message_error
+- create_messages
+- create_messages_frm_bapirettab
+- messages_has_error
+- get_errors
+- add_message
+- remove_message
+- get_bapiret2
+- get_bapirettab
+- get_symsg
+- get_sxco_t_messages
 
-- **Methods:**
-  - `equals(message1: if_xco_message, message2: if_xco_message)`: Compares two messages and returns a boolean result.
+## Class: ycl_al_messaging_demo
 
-### ycl_al_message_converter
-This class converts BAPI return structures to system messages.
+### Methods
 
-- **Methods:**
-  - `bapiret2_to_symsg(bapiret2: bapiret2)`: Converts a BAPI return structure to a system message.
+#### create_message
 
-### ycl_al_message_factory
-This class creates and manages message-related objects.
+Creates a message using the `ycl_al_message_factory`.
 
-- **Attributes:**
-  - `validator`: Reference to `ycl_al_message_validator`
-  - `comparator`: Reference to `ycl_al_message_comparator`
-  - `converter`: Reference to `ycl_al_message_converter`
+**Parameters:**
+- None
 
-- **Methods:**
-  - `constructor()`: Initializes the factory with validator, comparator, and converter.
-  - `create(symsg: symsg)`: Creates a message object from a system message.
+```abap
+METHOD create_message.
+  result = NEW ycl_al_message_factory( )->create( get_symsg( ) ).
+  " Alternatively
+  result = xco_cp=>message( get_symsg( ) ).
+ENDMETHOD.
+```
 
-### ycl_al_message_validator
-This class validates different types of messages.
+#### create_message_from_bapiret2
 
-- **Methods:**
-  - `is_error(message: if_xco_message)`: Checks if a message is an error.
-  - `is_warning(message: if_xco_message)`: Checks if a message is a warning.
-  - `is_success(message: if_xco_message)`: Checks if a message is a success.
-  - `is_information(message: if_xco_message)`: Checks if a message is informational.
-  - `is_type(message: if_xco_message, type: cl_xco_message_type)`: Checks if a message is of a specific type.
+Creates a message from a BAPI return structure.
 
-### ycl_al_messages_comparator
-This class compares collections of messages.
+**Parameters:**
+- None
 
-- **Methods:**
-  - `equals(messages1: if_xco_messages, messages2: if_xco_messages)`: Compares two collections of messages.
-  - `contains(messages: if_xco_messages, message: if_xco_message)`: Checks if a collection contains a specific message.
+```abap
+METHOD create_message_from_bapiret2.
+  DATA(message_factory) = NEW ycl_al_message_factory( ).
+  result = message_factory->create( message_factory->converter->bapiret2_to_symsg( get_bapiret2( ) ) ).
+ENDMETHOD.
+```
 
-### ycl_al_messages_converter
-This class converts BAPI return tables to collections of system messages.
+#### is_message_error
 
-- **Methods:**
-  - `bapirettab_to_sxco_t_messages(bapirettab: bapirettab)`: Converts a BAPI return table to a collection of system messages.
+Checks if a message is an error.
 
-### ycl_al_messages_factory
-This class creates and manages collections of message-related objects.
+**Parameters:**
+- None
 
-- **Attributes:**
-  - `validator`: Reference to `ycl_al_messages_validator`
-  - `comparator`: Reference to `ycl_al_messages_comparator`
-  - `converter`: Reference to `ycl_al_messages_converter`
-  - `modifier`: Reference to `ycl_al_messages_modifier`
+```abap
+METHOD is_message_error.
+  NEW ycl_al_message_factory( )->validator->is_error( create_message( ) ).
+ENDMETHOD.
+```
 
-- **Methods:**
-  - `constructor()`: Initializes the factory with validator, comparator, converter, and modifier.
-  - `create(sxco_t_messages: sxco_t_messages)`: Creates a collection of message objects from a collection of system messages.
+#### create_messages
 
-### ycl_al_messages_modifier
-This class modifies collections of messages.
+Creates a collection of messages.
 
-- **Methods:**
-  - `add_message(messages: if_xco_messages, message: if_xco_message)`: Adds a message to a collection.
-  - `remove_message(messages: if_xco_messages, message: if_xco_message)`: Removes a message from a collection.
-  - `remove_duplicates(messages: if_xco_messages)`: Removes duplicate messages from a collection.
+**Parameters:**
+- None
 
-### ycl_al_messages_validator
-This class validates collections of messages.
+```abap
+METHOD create_messages.
+  result = NEW ycl_al_messages_factory( )->create( get_sxco_t_messages( ) ).
+  " Alternatively
+  result = xco_cp=>messages( get_sxco_t_messages( ) ).
+ENDMETHOD.
+```
 
-- **Methods:**
-  - `has_errors(messages: if_xco_messages)`: Checks if a collection has error messages.
-  - `has_warnings(messages: if_xco_messages)`: Checks if a collection has warning messages.
-  - `has_informations(messages: if_xco_messages)`: Checks if a collection has informational messages.
-  - `has_successes(messages: if_xco_messages)`: Checks if a collection has success messages.
-  - `get_messages_of_type(messages: if_xco_messages, type: cl_xco_message_type)`: Gets messages of a specific type from a collection.
+#### create_messages_frm_bapirettab
 
-## Relationships
+Creates a collection of messages from a BAPI return table.
 
-- `ycl_al_message_factory` has references to `ycl_al_message_validator`, `ycl_al_message_comparator`, and `ycl_al_message_converter`.
-- `ycl_al_messages_factory` has references to `ycl_al_messages_validator`, `ycl_al_messages_comparator`, `ycl_al_messages_converter`, and `ycl_al_messages_modifier`.
-- `ycl_al_messages_comparator` and `ycl_al_messages_modifier` use `ycl_al_message_factory` for comparison operations.
-- `ycl_al_messages_validator` uses `ycl_al_message_factory` for validation operations.
+**Parameters:**
+- None
+
+```abap
+METHOD create_messages_frm_bapirettab.
+  DATA(messages_factory) = NEW ycl_al_messages_factory( ).
+  result = messages_factory->create( messages_factory->converter->bapirettab_to_sxco_t_messages( get_bapirettab( ) ) ).
+ENDMETHOD.
+```
+
+#### messages_has_error
+
+Checks if a collection of messages contains any errors.
+
+**Parameters:**
+- None
+
+```abap
+METHOD messages_has_error.
+  result = NEW ycl_al_messages_factory( )->validator->has_errors( create_messages( ) ).
+ENDMETHOD.
+```
+
+#### get_errors
+
+Gets all error messages from a collection.
+
+**Parameters:**
+- None
+
+```abap
+METHOD get_errors.
+  result = NEW ycl_al_messages_factory( )->validator->get_messages_of_type( messages = create_messages( )
+    type = xco_cp_message=>type->error ).
+ENDMETHOD.
+```
+
+#### add_message
+
+Adds a message to a collection.
+
+**Parameters:**
+- None
+
+```abap
+METHOD add_message.
+  result = NEW ycl_al_messages_factory( )->modifier->add_message( messages = create_messages( )
+    message = create_message( ) ).
+ENDMETHOD.
+```
+
+#### remove_message
+
+Removes a message from a collection.
+
+**Parameters:**
+- None
+
+```abap
+METHOD remove_message.
+  result = NEW ycl_al_messages_factory( )->modifier->remove_message( messages = create_messages( )
+    message = create_message( ) ).
+ENDMETHOD.
+```
+
+### Helper Methods
+
+#### get_bapiret2
+
+Returns a sample BAPI return structure.
+
+**Parameters:**
+- None
+
+```abap
+METHOD get_bapiret2.
+  result = VALUE #( id = 'MyMessageClass'
+    number = '000'
+    type = xco_cp_message=>type->error->value
+    message_v1 = 'MyMessageVariable1' ).
+ENDMETHOD.
+```
+
+#### get_bapirettab
+
+Returns a sample BAPI return table.
+
+**Parameters:**
+- None
+
+```abap
+METHOD get_bapirettab.
+  result = VALUE #( ( get_bapiret2( ) )
+    ( get_bapiret2( ) ) ).
+ENDMETHOD.
+```
+
+#### get_symsg
+
+Returns a sample system message.
+
+**Parameters:**
+- None
+
+```abap
+METHOD get_symsg.
+  result = VALUE #( msgid = 'MyMessageClass'
+    msgno = '000'
+    msgty = xco_cp_message=>type->error->value
+    msgv1 = 'MyMessageVariable1' ).
+ENDMETHOD.
+```
+
+#### get_sxco_t_messages
+
+Returns a sample collection of system messages.
+
+**Parameters:**
+- None
+
+```abap
+METHOD get_sxco_t_messages.
+  result = VALUE #( ( create_message( ) )
+    ( create_message( ) ) ).
+ENDMETHOD.
+```
