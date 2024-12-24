@@ -24,6 +24,7 @@ CLASS ycl_al_messages_factory IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD create.
+    CHECK sxco_t_messages IS NOT INITIAL.
     result = xco_cp=>messages( sxco_t_messages ).
   ENDMETHOD.
 ENDCLASS.

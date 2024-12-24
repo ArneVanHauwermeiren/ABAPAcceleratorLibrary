@@ -19,12 +19,17 @@ ENDCLASS.
 
 CLASS ycl_al_messages_modifier IMPLEMENTATION.
   METHOD add_message.
-    DATA(existing_messages) = messages->value.
+    DATA existing_messages TYPE sxco_t_messages.
+    IF messages IS NOT INITIAL.
+        existing_messages = messages->value.
+    ENDIF.
     APPEND message TO existing_messages.
     result = xco_cp=>messages( existing_messages ).
   ENDMETHOD.
 
   METHOD remove_duplicates.
+    CHECK messages IS NOT INITIAL.
+
     DATA(existing_messages) = messages->value.
 
     DATA new_messages TYPE REF TO if_xco_messages.
@@ -32,11 +37,17 @@ CLASS ycl_al_messages_modifier IMPLEMENTATION.
       IF NOT NEW ycl_al_messages_factory( )->comparator->contains( messages = new_messages
                                                                    message  = existing_message ).
 
+        new_messages = me->add_message( messages = new_messages
+                                        message  = existing_message ).
       ENDIF.
     ENDLOOP.
+
+    result = new_messages.
   ENDMETHOD.
 
   METHOD remove_message.
+    CHECK messages IS NOT INITIAL.
+
     DATA(existing_messages) = messages->value.
 
     DATA new_messages LIKE existing_messages.

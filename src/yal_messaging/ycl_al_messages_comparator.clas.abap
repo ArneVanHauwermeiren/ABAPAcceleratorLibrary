@@ -16,6 +16,16 @@ ENDCLASS.
 
 CLASS ycl_al_messages_comparator IMPLEMENTATION.
   METHOD equals.
+    IF messages1 IS INITIAL AND messages2 IS INITIAL.
+        result = abap_true.
+        RETURN.
+    ENDIF.
+
+    IF ( messages1 IS INITIAL AND messages2 IS NOT INITIAL )
+    OR ( messages2 IS NOT INITIAL AND messages2 IS INITIAL ).
+        RETURN.
+    ENDIF.
+
     DATA(messages1_values) = messages1->value.
     SORT messages1_values.
 
@@ -34,6 +44,8 @@ CLASS ycl_al_messages_comparator IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD contains.
+    CHECK messages IS NOT INITIAL.
+
     LOOP AT messages->value INTO DATA(existing_message).
       IF NEW ycl_al_message_factory( )->comparator->equals( message1 = existing_message
                                                             message2 = message ).
