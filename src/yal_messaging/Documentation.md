@@ -81,19 +81,22 @@ This documentation provides examples of how to use the messaging classes in ABAP
 
 ## Table of Contents
 
+### Single message
 - [create_message](#create_message)
-- create_message_from_bapiret2
-- is_message_error
-- create_messages
-- create_messages_frm_bapirettab
-- messages_has_error
-- get_errors
-- add_message
-- remove_message
-- get_bapiret2
-- get_bapirettab
-- get_symsg
-- get_sxco_t_messages
+- [create_message_from_bapiret2](#create_message_from_bapiret2)
+- [is_message_error](#is_message_error)
+### Message collection
+- [create_messages](#create_messages)
+- [create_messages_from_bapirettab](#create_messages_frm_bapirettab)
+- [messages_has_error](#messages_has_error)
+- [get_errors](#get_errors)
+- [add_message](#add_message)
+- [remove_message](#remove_message)
+#### Helper methods for demo class
+- [get_bapiret2](#get_bapiret2)
+- [get_bapirettab](#get_bapirettab)
+- [get_symsg](#get_symsg)
+- [get_sxco_t_messages](#get_sxco_t_messages)
 
 ## Class: ycl_al_messaging_demo
 
@@ -102,10 +105,7 @@ This documentation provides examples of how to use the messaging classes in ABAP
 #### create_message
 
 Creates a message using the `ycl_al_message_factory`.
-
-**Parameters:**
-- None
-
+Returns an instance of if_xco_message
 ```abap
 METHOD create_message.
   result = NEW ycl_al_message_factory( )->create( get_symsg( ) ).
@@ -116,11 +116,8 @@ ENDMETHOD.
 
 #### create_message_from_bapiret2
 
-Creates a message from a BAPI return structure.
-
-**Parameters:**
-- None
-
+Creates a message from a BAPIRET2 return structure.
+Returns an instance of if_xco_message
 ```abap
 METHOD create_message_from_bapiret2.
   DATA(message_factory) = NEW ycl_al_message_factory( ).
@@ -131,10 +128,7 @@ ENDMETHOD.
 #### is_message_error
 
 Checks if a message is an error.
-
-**Parameters:**
-- None
-
+Returns a boolean
 ```abap
 METHOD is_message_error.
   NEW ycl_al_message_factory( )->validator->is_error( create_message( ) ).
@@ -144,10 +138,7 @@ ENDMETHOD.
 #### create_messages
 
 Creates a collection of messages.
-
-**Parameters:**
-- None
-
+Returns an instance of if_xco_messages
 ```abap
 METHOD create_messages.
   result = NEW ycl_al_messages_factory( )->create( get_sxco_t_messages( ) ).
@@ -158,11 +149,8 @@ ENDMETHOD.
 
 #### create_messages_frm_bapirettab
 
-Creates a collection of messages from a BAPI return table.
-
-**Parameters:**
-- None
-
+Creates a collection of messages from a BAPIRETTAB return table.
+Returns an instance of if_xco_messages
 ```abap
 METHOD create_messages_frm_bapirettab.
   DATA(messages_factory) = NEW ycl_al_messages_factory( ).
@@ -173,10 +161,7 @@ ENDMETHOD.
 #### messages_has_error
 
 Checks if a collection of messages contains any errors.
-
-**Parameters:**
-- None
-
+Returns a boolean
 ```abap
 METHOD messages_has_error.
   result = NEW ycl_al_messages_factory( )->validator->has_errors( create_messages( ) ).
@@ -186,10 +171,7 @@ ENDMETHOD.
 #### get_errors
 
 Gets all error messages from a collection.
-
-**Parameters:**
-- None
-
+Returns an instance of if_xco_messages
 ```abap
 METHOD get_errors.
   result = NEW ycl_al_messages_factory( )->validator->get_messages_of_type( messages = create_messages( )
@@ -200,10 +182,7 @@ ENDMETHOD.
 #### add_message
 
 Adds a message to a collection.
-
-**Parameters:**
-- None
-
+Returns an instance of if_xco_messages
 ```abap
 METHOD add_message.
   result = NEW ycl_al_messages_factory( )->modifier->add_message( messages = create_messages( )
@@ -214,10 +193,7 @@ ENDMETHOD.
 #### remove_message
 
 Removes a message from a collection.
-
-**Parameters:**
-- None
-
+Returns an instance of if_xco_messages
 ```abap
 METHOD remove_message.
   result = NEW ycl_al_messages_factory( )->modifier->remove_message( messages = create_messages( )
@@ -229,10 +205,7 @@ ENDMETHOD.
 
 #### get_bapiret2
 
-Returns a sample BAPI return structure.
-
-**Parameters:**
-- None
+Returns a sample BAPIRET2 structure.
 
 ```abap
 METHOD get_bapiret2.
@@ -245,10 +218,7 @@ ENDMETHOD.
 
 #### get_bapirettab
 
-Returns a sample BAPI return table.
-
-**Parameters:**
-- None
+Returns a sample BAPIRETTAB table.
 
 ```abap
 METHOD get_bapirettab.
@@ -260,9 +230,6 @@ ENDMETHOD.
 #### get_symsg
 
 Returns a sample system message.
-
-**Parameters:**
-- None
 
 ```abap
 METHOD get_symsg.
@@ -276,9 +243,6 @@ ENDMETHOD.
 #### get_sxco_t_messages
 
 Returns a sample collection of system messages.
-
-**Parameters:**
-- None
 
 ```abap
 METHOD get_sxco_t_messages.
