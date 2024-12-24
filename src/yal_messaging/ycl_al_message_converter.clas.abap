@@ -1,12 +1,21 @@
+"!" Class `ycl_al_message_converter`
+"!
+"! This class provides utilities to convert various message formats.
+"! It includes methods to convert BAPI return structures into system message structures.
 CLASS ycl_al_message_converter DEFINITION
   PUBLIC FINAL
   CREATE PRIVATE
   GLOBAL FRIENDS ycl_al_message_factory.
 
   PUBLIC SECTION.
+    "! Converts a BAPI return structure (`bapiret2`) to a system message (`symsg`).
+    "!
+    "! @parameter bapiret2 | The BAPI return structure to be converted.
+    "! @parameter result | The resulting system message structure.
     METHODS bapiret2_to_symsg IMPORTING bapiret2      TYPE bapiret2
                               RETURNING VALUE(result) TYPE symsg.
 ENDCLASS.
+
 
 
 CLASS ycl_al_message_converter IMPLEMENTATION.

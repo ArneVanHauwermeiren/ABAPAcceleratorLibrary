@@ -1,20 +1,39 @@
+"!" Class `ycl_al_messages_modifier`
+"!
+"! This class provides utilities to modify collections of messages.
+"! It includes methods to add, remove, and remove duplicate messages from a collection.
 CLASS ycl_al_messages_modifier DEFINITION
   PUBLIC FINAL
   CREATE PRIVATE
   GLOBAL FRIENDS ycl_al_messages_factory.
 
   PUBLIC SECTION.
+    "! Adds a message to the collection.
+    "!
+    "! @parameter messages | The collection to which the message will be added.
+    "! @parameter message | The message to be added.
+    "! @parameter result | The updated collection of messages.
     METHODS add_message IMPORTING !messages     TYPE REF TO if_xco_messages
                                   !message      TYPE REF TO if_xco_message
                         RETURNING VALUE(result) TYPE REF TO if_xco_messages.
 
+    "! Removes a message from the collection.
+    "!
+    "! @parameter messages | The collection from which the message will be removed.
+    "! @parameter message | The message to be removed.
+    "! @parameter result | The updated collection of messages.
     METHODS remove_message IMPORTING !messages     TYPE REF TO if_xco_messages
                                      !message      TYPE REF TO if_xco_message
                            RETURNING VALUE(result) TYPE REF TO if_xco_messages.
 
+    "! Removes duplicate messages from the collection.
+    "!
+    "! @parameter messages | The collection from which duplicates will be removed.
+    "! @parameter result | The updated collection of unique messages.
     METHODS remove_duplicates IMPORTING !messages     TYPE REF TO if_xco_messages
                               RETURNING VALUE(result) TYPE REF TO if_xco_messages.
 ENDCLASS.
+
 
 
 CLASS ycl_al_messages_modifier IMPLEMENTATION.

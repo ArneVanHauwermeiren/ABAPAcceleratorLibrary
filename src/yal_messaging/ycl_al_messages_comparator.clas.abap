@@ -1,17 +1,32 @@
+"!" Class `ycl_al_messages_comparator`
+"!
+"! This class provides methods to compare collections of messages.
+"! It supports checking for equality and determining if a message is contained within a collection.
 CLASS ycl_al_messages_comparator DEFINITION
   PUBLIC FINAL
   CREATE PRIVATE
   GLOBAL FRIENDS ycl_al_messages_factory.
 
   PUBLIC SECTION.
+    "! Compares two collections of messages for equality.
+    "!
+    "! @parameter messages1 | The first collection to be compared.
+    "! @parameter messages2 | The second collection to be compared.
+    "! @parameter result | Boolean result indicating if the collections are equal.
     METHODS equals IMPORTING messages1     TYPE REF TO if_xco_messages
                              messages2     TYPE REF TO if_xco_messages
                    RETURNING VALUE(result) TYPE abap_boolean.
 
+    "! Checks if a message is contained within a collection.
+    "!
+    "! @parameter messages | The collection to search.
+    "! @parameter message | The message to look for in the collection.
+    "! @parameter result | Boolean result indicating if the message is contained in the collection.
     METHODS contains IMPORTING !messages     TYPE REF TO if_xco_messages
                                !message      TYPE REF TO if_xco_message
                      RETURNING VALUE(result) TYPE abap_boolean.
 ENDCLASS.
+
 
 
 CLASS ycl_al_messages_comparator IMPLEMENTATION.
