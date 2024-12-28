@@ -1,53 +1,85 @@
-CLASS ltc_ycl_al_message_factory DEFINITION
-  FOR TESTING
+CLASS lcl_al_message_factory DEFINITION FINAL FOR TESTING
   DURATION SHORT
   RISK LEVEL HARMLESS.
 
   PRIVATE SECTION.
-    DATA: message_factory TYPE REF TO ycl_al_message_factory,
-          symsg          TYPE symsg,
-          message        TYPE REF TO if_xco_message.
-
+    " Test Methods
     METHODS:
       setup,
       teardown,
-      create_message FOR TESTING,
-      create_message_from_bapiret2 FOR TESTING.
+      create_from_xco_message FOR TESTING,
+      create_from_symsg FOR TESTING,
+      create_from_bapiret2 FOR TESTING.
+
+    " Mock Data
+    DATA: factory    TYPE REF TO ycl_al_message_factory,
+          xco_message TYPE REF TO if_xco_message,
+          symsg      TYPE symsg,
+          bapiret2   TYPE bapiret2.
 
 ENDCLASS.
 
-CLASS ltc_ycl_al_message_factory IMPLEMENTATION.
+CLASS lcl_al_message_factory IMPLEMENTATION.
 
   METHOD setup.
-    message_factory = NEW ycl_al_message_factory( ).
-    symsg = VALUE #( msgid = 'MyMessageClass'
-                     msgno = '000'
-                     msgty = xco_cp_message=>type->error->value
-                     msgv1 = 'MyMessageVariable1' ).
+    " Initialize test class and mock data
+    factory = NEW ycl_al_message_factory( ).
+
+    " Mock symsg
+    symsg = VALUE #( msgid = 'TEST' msgty = 'E' msgno = '001' msgv1 = 'Parameter1' ).
+
+    " Mock xco_message
+    xco_message = xco_cp=>message( symsg ).
+
+    " Mock bapiret2
+    bapiret2 = VALUE #( id = 'TEST' type = 'E' number = '001' message_v1 = 'Parameter1' ).
   ENDMETHOD.
 
   METHOD teardown.
-    CLEAR: message_factory, symsg, message.
+    " Cleanup objects
+    CLEAR: factory, xco_message, symsg, bapiret2.
   ENDMETHOD.
 
-  METHOD create_message.
-    message = message_factory->create( symsg ).
-    cl_abap_unit_assert=>assert_not_initial( act = message ).
-    cl_abap_unit_assert=>assert_equals( act = message->get_type( )
-                                        exp = xco_cp_message=>type->error ).
+  METHOD create_from_xco_message.
+    " Test creating a message object from xco_message
+    DATA(result) = factory->create_from_xco_message( xco_message ).
+
+    " Assert the result is not initial
+    cl_abap_unit_assert=>assert_not_initial( result ).
+
+    " Further assertions to verify result properties
+    cl_abap_unit_assert=>assert_equals(
+      act = result->get_type( )->value
+      exp = xco_message->value-msgty
+      msg = 'Message type mismatch from xco_message' ).
   ENDMETHOD.
 
-  METHOD create_message_from_bapiret2.
-    DATA: bapiret2 TYPE bapiret2.
-    bapiret2 = VALUE #( id = 'MyMessageClass'
-                        number = '000'
-                        type = xco_cp_message=>type->error->value
-                        message_v1 = 'MyMessageVariable1' ).
+  METHOD create_from_symsg.
+    " Test creating a message object from symsg
+    DATA(result) = factory->create_from_symsg( symsg ).
 
-    message = message_factory->create( message_factory->converter->bapiret2_to_symsg( bapiret2 ) ).
-    cl_abap_unit_assert=>assert_not_initial( act = message ).
-    cl_abap_unit_assert=>assert_equals( act = message->get_type( )
-                                        exp = xco_cp_message=>type->error ).
+    " Assert the result is not initial
+    cl_abap_unit_assert=>assert_not_initial( result ).
+
+    " Further assertions to verify result properties
+    cl_abap_unit_assert=>assert_equals(
+      act = result->if_xco_message~value-msgid
+      exp = symsg-msgid
+      msg = 'Message ID mismatch from symsg' ).
+  ENDMETHOD.
+
+  METHOD create_from_bapiret2.
+    " Test creating a message object from bapiret2
+    DATA(result) = factory->create_from_bapiret2( bapiret2 ).
+
+    " Assert the result is not initial
+    cl_abap_unit_assert=>assert_not_initial( result ).
+
+    " Further assertions to verify result properties
+    cl_abap_unit_assert=>assert_equals(
+      act = result->if_xco_message~value-msgv1
+      exp = 'Parameter1'
+      msg = 'Message text mismatch from bapiret2' ).
   ENDMETHOD.
 
 ENDCLASS.

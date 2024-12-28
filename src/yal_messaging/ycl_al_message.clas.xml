@@ -3,14 +3,13 @@
  <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
   <asx:values>
    <VSEOCLASS>
-    <CLSNAME>YCL_AL_MESSAGE_COMPARATOR</CLSNAME>
+    <CLSNAME>YCL_AL_MESSAGE</CLSNAME>
     <LANGU>E</LANGU>
-    <DESCRIPT>Message comparator</DESCRIPT>
+    <DESCRIPT>Message</DESCRIPT>
     <STATE>1</STATE>
     <CLSCCINCL>X</CLSCCINCL>
     <FIXPT>X</FIXPT>
     <UNICODE>X</UNICODE>
-    <WITH_UNIT_TESTS>X</WITH_UNIT_TESTS>
    </VSEOCLASS>
   </asx:values>
  </asx:abap>
