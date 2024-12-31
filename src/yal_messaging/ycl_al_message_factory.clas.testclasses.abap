@@ -12,10 +12,10 @@ CLASS lcl_al_message_factory DEFINITION FINAL FOR TESTING
       create_from_bapiret2 FOR TESTING.
 
     " Mock Data
-    DATA: factory    TYPE REF TO ycl_al_message_factory,
-          xco_message TYPE REF TO if_xco_message,
-          symsg      TYPE symsg,
-          bapiret2   TYPE bapiret2.
+    DATA FACTORY TYPE REF TO YCL_AL_MESSAGE_FACTORY.
+    DATA XCO_MESSAGE TYPE REF TO IF_XCO_MESSAGE.
+    DATA SYMSG TYPE SYMSG.
+    DATA BAPIRET2 TYPE BAPIRET2.
 
 ENDCLASS.
 

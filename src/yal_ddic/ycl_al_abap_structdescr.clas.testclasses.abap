@@ -34,11 +34,11 @@ CLASS lt_abap_strucdescr IMPLEMENTATION.
     TYPES: BEGIN OF include,
              fieldb TYPE c LENGTH 1,
              fieldc TYPE c LENGTH 1,
-           END OF include,
-           BEGIN OF structure,
+           END OF include.
+    TYPES: BEGIN OF structure,
              fielda TYPE c LENGTH 1.
-             INCLUDE TYPE include.
-    TYPES: END OF structure.
+    TYPES:   include TYPE include,
+           END OF structure.
 
     DATA structure TYPE structure.
 

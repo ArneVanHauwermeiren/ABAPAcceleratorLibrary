@@ -7,7 +7,7 @@ CLASS ycl_al_abap_structdescr DEFINITION
     "! Constructor for initializing the structure descriptor.
     "!
     "! @parameter structure_descriptor | A reference to an existing structure descriptor.
-    METHODS constructor IMPORTING structure_descriptor TYPE REF TO cl_abap_structdescr OPTIONAL.
+    METHODS constructor IMPORTING structure_descriptor TYPE REF TO cl_abap_structdescr.
 
     "!
     "! Adds a field to the structure descriptor.
@@ -21,13 +21,13 @@ CLASS ycl_al_abap_structdescr DEFINITION
     "! Retrieves the structure descriptor.
     "!
     "! @parameter descriptor | The structure descriptor.
-    METHODS get_descriptor RETURNING VALUE(descriptor) TYPE REF TO cl_abap_structdescr.
+    METHODS get_descriptor RETURNING VALUE(result) TYPE REF TO cl_abap_structdescr.
 
     "!
     "! Creates a new structure of the type defined by the structure descriptor.
     "!
     "! @parameter structure | The newly created structure instance.
-    METHODS create_structure RETURNING VALUE(structure) TYPE REF TO data.
+    METHODS create_structure RETURNING VALUE(result) TYPE REF TO data.
 
     "!
     "! Retrieves <strong>all</strong> components of the structure descriptor, including those nested
@@ -35,7 +35,7 @@ CLASS ycl_al_abap_structdescr DEFINITION
     "! This only works for nested structures/includes, <strong>not tables</strong>.
     "!
     "! @parameter components | A table containing all components (fields and nested structures).
-    METHODS get_all_subcomp_of_structdescr RETURNING VALUE(components) TYPE abap_component_tab.
+    METHODS get_all_subcomp_of_structdescr RETURNING VALUE(result) TYPE abap_component_tab.
 
   PRIVATE SECTION.
     "!
@@ -45,10 +45,11 @@ CLASS ycl_al_abap_structdescr DEFINITION
 ENDCLASS.
 
 CLASS ycl_al_abap_structdescr IMPLEMENTATION.
-
   METHOD add_field.
+    DATA components TYPE cl_abap_structdescr=>component_table.
+
     IF structure_descriptor IS BOUND.
-      DATA(components) = structure_descriptor->get_components( ).
+      components = structure_descriptor->get_components( ).
     ENDIF.
 
     APPEND VALUE #( name = fieldname
@@ -62,23 +63,22 @@ CLASS ycl_al_abap_structdescr IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD create_structure.
-    CREATE DATA structure TYPE HANDLE structure_descriptor.
+    CREATE DATA result TYPE HANDLE structure_descriptor.
   ENDMETHOD.
 
   METHOD get_all_subcomp_of_structdescr.
     LOOP AT structure_descriptor->get_components( ) INTO DATA(component).
       IF component-type IS INSTANCE OF cl_abap_structdescr.
         DATA(sub_component_structdescr) = NEW ycl_al_abap_structdescr( CAST cl_abap_structdescr( component-type ) ).
-        APPEND LINES OF sub_component_structdescr->get_all_subcomp_of_structdescr( ) TO components.
+        APPEND LINES OF sub_component_structdescr->get_all_subcomp_of_structdescr( ) TO result.
       ELSE.
-        APPEND component TO components.
+        APPEND component TO result.
       ENDIF.
     ENDLOOP.
   ENDMETHOD.
 
   METHOD get_descriptor.
-    descriptor = structure_descriptor.
+    result = structure_descriptor.
   ENDMETHOD.
 
 ENDCLASS.
-
