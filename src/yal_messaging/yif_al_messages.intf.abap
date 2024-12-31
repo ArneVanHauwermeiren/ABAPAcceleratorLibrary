@@ -10,7 +10,7 @@ INTERFACE yif_al_messages
   INTERFACES if_xco_news.
 
   TYPES: BEGIN OF types,
-           messages TYPE STANDARD TABLE OF REF TO yif_al_message WITH DEFAULT KEY,
+           messages TYPE STANDARD TABLE OF REF TO yif_al_message WITH EMPTY KEY,
          END OF types.
 
   "! Retrieves the collection of messages.

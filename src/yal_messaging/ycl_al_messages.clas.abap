@@ -30,17 +30,17 @@ CLASS ycl_al_messages IMPLEMENTATION.
   METHOD constructor.
     DATA(message_factory) = NEW ycl_al_message_factory( ).
     LOOP AT xco_messages->value INTO DATA(xco_message).
-      APPEND message_factory->create_from_xco_message( xco_message ) TO me->value.
+      APPEND MESSAGE_FACTORY->CREATE_FROM_XCO_MESSAGE( XCO_MESSAGE ) TO VALUE.
     ENDLOOP.
   ENDMETHOD.
 
   METHOD yif_al_messages~get_messages.
-    result = me->value.
+    RESULT = VALUE.
   ENDMETHOD.
 
   METHOD yif_al_messages~add_message.
-    APPEND message TO me->value.
-    me->if_xco_messages~value = get_messages( ).
+    APPEND MESSAGE TO VALUE.
+    IF_XCO_MESSAGES~VALUE = GET_MESSAGES( ).
   ENDMETHOD.
 
   METHOD yif_al_messages~remove_duplicates.
@@ -53,11 +53,11 @@ CLASS ycl_al_messages IMPLEMENTATION.
       ENDIF.
     ENDLOOP.
 
-    me->if_xco_messages~value = get_messages( ).
+    IF_XCO_MESSAGES~VALUE = GET_MESSAGES( ).
   ENDMETHOD.
 
   METHOD yif_al_messages~remove_message.
-    CHECK me->if_xco_messages~value IS NOT INITIAL.
+    CHECK IF_XCO_MESSAGES~VALUE IS NOT INITIAL.
 
     DATA(existing_messages) = get_messages( ).
 
@@ -68,7 +68,7 @@ CLASS ycl_al_messages IMPLEMENTATION.
       ENDIF.
     ENDLOOP.
 
-    me->if_xco_messages~value = me->value = new_messages.
+    VALUE = NEW_MESSAGES.    IF_XCO_MESSAGES~VALUE = VALUE.
   ENDMETHOD.
 
   METHOD yif_al_messages~contains.
