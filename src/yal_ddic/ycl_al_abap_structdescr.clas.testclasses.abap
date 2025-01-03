@@ -37,8 +37,8 @@ CLASS lt_abap_strucdescr IMPLEMENTATION.
            END OF include.
     TYPES: BEGIN OF structure,
              fielda TYPE c LENGTH 1.
-    TYPES:   include TYPE include,
-           END OF structure.
+             INCLUDE TYPE include.
+    TYPES: END OF structure.
 
     DATA structure TYPE structure.
 
@@ -95,7 +95,7 @@ CLASS lt_abap_strucdescr IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD get_all_subcomp_of_structdescr.
-    DATA(components) = sut->get_all_subcomp_of_structdescr( ).
+    DATA(components) = sut->get_all_subcomponents( ).
 
     " Verify the subcomponents
     cl_abap_unit_assert=>assert_equals( exp = 3

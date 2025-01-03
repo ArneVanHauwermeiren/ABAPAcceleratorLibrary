@@ -12,7 +12,7 @@ CLASS ycl_al_rap_message_definition DEFINITION
            END OF ENUM message_number.
 
     "! Constant representing the message class for RAP related messages
-    CONSTANTS message_class TYPE symsgid VALUE 'ZCM_AL_RAP'.
+    CONSTANTS message_class TYPE symsgid VALUE 'YCM_AL_RAP'.
 
 ENDCLASS.
 

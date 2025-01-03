@@ -7,6 +7,7 @@ CLASS ycl_al_message DEFINITION
   FINAL
   CREATE PUBLIC.
 
+
   PUBLIC SECTION.
 
     INTERFACES yif_al_message.

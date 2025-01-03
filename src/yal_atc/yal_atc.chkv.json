@@ -1,0 +1,463 @@
+{
+  "formatVersion": "1",
+  "header": {
+    "description": "Accelerator Library - ATC",
+    "originalLanguage": "en",
+    "abapLanguageVersion": "cloudDevelopment"
+  },
+  "selectedChecks": [
+    {
+      "checkName": "/CC4A/PREFER_IS_NOT"
+    },
+    {
+      "checkName": "/CC4A/ASSIGNMENT_CHAINING"
+    },
+    {
+      "checkName": "/CC4A/CHAIN_DECLARATIONS"
+    },
+    {
+      "checkName": "/CC4A/CHECK_IN_ITERATION"
+    },
+    {
+      "checkName": "/CC4A/CONSTANTS_INTERFACE"
+    },
+    {
+      "checkName": "/CC4A/AVOID_DB_ACCESS_IN_AUNIT"
+    },
+    {
+      "checkName": "/CC4A/AVOID_SELF_REFERENCE"
+    },
+    {
+      "checkName": "/CC4A/AVOID_DEFAULT_KEY"
+    },
+    {
+      "checkName": "/CC4A/METHOD_SIGNATURE",
+      "parameters": [
+        {
+          "name": "CheckPubMethodNoInterface",
+          "value": "false"
+        },
+        {
+          "name": "CheckInputParamBoolean",
+          "value": "true"
+        },
+        {
+          "name": "CheckInputParamOptional",
+          "value": "true"
+        },
+        {
+          "name": "CheckOutputParamNumber",
+          "value": "true"
+        },
+        {
+          "name": "CheckOutputParamType",
+          "value": "true"
+        },
+        {
+          "name": "CheckRetParamNotNamedResult",
+          "value": "true"
+        },
+        {
+          "name": "CheckExpParamNumberNotOne",
+          "value": "true"
+        }
+      ]
+    },
+    {
+      "checkName": "/CC4A/MODERN"
+    },
+    {
+      "checkName": "/CC4A/PREFER_METHODS"
+    },
+    {
+      "checkName": "/CC4A/VARIABLE_SCOPE"
+    },
+    {
+      "checkName": "/CC4A/PROPER_BOOL_USAGE"
+    },
+    {
+      "checkName": "/CC4A/AVOID_TEST_SEAM"
+    },
+    {
+      "checkName": "SLIN_VERS",
+      "parameters": [
+        {
+          "name": "ABAPLanguageVersion",
+          "value": "4"
+        }
+      ]
+    },
+    {
+      "checkName": "SYCM_CHECK_ABAP_LANGU_VERSION"
+    },
+    {
+      "checkName": "SYCM_CLOUD_ALLOWED_OBJCT_TYPES"
+    },
+    {
+      "checkName": "SYCM_CLOUD_RELEASED_OBJECTS",
+      "parameters": [
+        {
+          "name": "ABAPLanguageVersion",
+          "value": "1"
+        },
+        {
+          "name": "URLObjectClassifications"
+        }
+      ]
+    },
+    {
+      "checkName": "SYCM_RELEASED_CLOUDIFIC_REPOS",
+      "parameters": [
+        {
+          "name": "Url",
+          "value": "https://raw.githubusercontent.com/SAP/abap-atc-cr-cv-s4hc/main/src/objectReleaseInfoLatest.json"
+        },
+        {
+          "name": "URLObjectClassifications"
+        }
+      ]
+    },
+    {
+      "checkName": "DD_CI_DDIC_CONSISTENCY_AC"
+    },
+    {
+      "checkName": "DD_CI_DDIC_CONSISTENCY_PA"
+    },
+    {
+      "checkName": "SADL_RUNTIME"
+    },
+    {
+      "checkName": "SADL_TEXT_SEARCH"
+    },
+    {
+      "checkName": "ODATA_CONSIST_EVTB"
+    },
+    {
+      "checkName": "ODATA_CONSISTENCY"
+    },
+    {
+      "checkName": "CI_SQL1_CONSISTENCY"
+    },
+    {
+      "checkName": "BDEF_IMPL_CHECK"
+    },
+    {
+      "checkName": "API_COMPATIBILITY"
+    },
+    {
+      "checkName": "API_CONSISTENCY"
+    },
+    {
+      "checkName": "API_CATALOG_USAGE"
+    },
+    {
+      "checkName": "API_USAGE"
+    },
+    {
+      "checkName": "CDS_REFERENCED_OBJECTS"
+    },
+    {
+      "checkName": "CDS_ACCESS_CONDITIONS"
+    },
+    {
+      "checkName": "CI_DCLS_IRB",
+      "parameters": [
+        {
+          "name": "EntireViewStack",
+          "value": "false"
+        }
+      ]
+    },
+    {
+      "checkName": "CDS_DDLX_SYNTAX_CHECK"
+    },
+    {
+      "checkName": "ABAP_UNIT",
+      "parameters": [
+        {
+          "name": "MaximumRiskLevel",
+          "value": "11"
+        },
+        {
+          "name": "MaximumRuntimeCategory",
+          "value": "12"
+        },
+        {
+          "name": "RuntimeRestriction",
+          "value": "2"
+        },
+        {
+          "name": "DurationLong",
+          "value": "3600"
+        },
+        {
+          "name": "DurationMedium",
+          "value": "300"
+        },
+        {
+          "name": "DurationShort",
+          "value": "60"
+        }
+      ]
+    },
+    {
+      "checkName": "SYCM_S4H_CDS_PRIV_ACC",
+      "parameters": [
+        {
+          "name": "ReleaseID"
+        },
+        {
+          "name": "SAPNotes"
+        }
+      ]
+    },
+    {
+      "checkName": "SYCM_S4H_SEARCH_DB_OPS",
+      "parameters": [
+        {
+          "name": "ReleaseID",
+          "value": "S4HANA_READINESS_1809"
+        },
+        {
+          "name": "SAPNotes",
+          "valueRangeList": [
+            {
+              "sign": "exclude",
+              "option": "equals",
+              "low": "0002470721",
+              "high": "0000000000"
+            }
+          ]
+        },
+        {
+          "name": "SimplificationItemCategories",
+          "valueRangeList": [
+            {
+              "sign": "exclude",
+              "option": "equals",
+              "low": "P"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "checkName": "BSP_SEC"
+    },
+    {
+      "checkName": "SLIN_SEC"
+    },
+    {
+      "checkName": "CI_CRITICAL_STATEMENTS",
+      "parameters": [
+        {
+          "name": "CCalls",
+          "value": "true"
+        },
+        {
+          "name": "SystemCalls",
+          "value": "true"
+        },
+        {
+          "name": "EditorCalls",
+          "value": "true"
+        },
+        {
+          "name": "Submits",
+          "value": "false"
+        },
+        {
+          "name": "CallTransaction",
+          "value": "true"
+        },
+        {
+          "name": "Rollbacks",
+          "value": "false"
+        },
+        {
+          "name": "ExecSQL",
+          "value": "true"
+        },
+        {
+          "name": "Hints",
+          "value": "true"
+        },
+        {
+          "name": "Generate",
+          "value": "true"
+        },
+        {
+          "name": "ReadReport",
+          "value": "false"
+        },
+        {
+          "name": "InsertReport",
+          "value": "true"
+        },
+        {
+          "name": "ImportDynpro",
+          "value": "false"
+        },
+        {
+          "name": "ExportDynpro",
+          "value": "true"
+        },
+        {
+          "name": "ImportNametab",
+          "value": "false"
+        },
+        {
+          "name": "ExportNametab",
+          "value": "true"
+        }
+      ]
+    },
+    {
+      "checkName": "CI_SELECT_TAW_SEC01",
+      "parameters": [
+        {
+          "name": "DynTab",
+          "value": "true"
+        },
+        {
+          "name": "DynWhere",
+          "value": "true"
+        },
+        {
+          "name": "Tables"
+        },
+        {
+          "name": "Client",
+          "value": "true"
+        }
+      ]
+    },
+    {
+      "checkName": "CI_IMUD_TAW_SEC01",
+      "parameters": [
+        {
+          "name": "DynTab",
+          "value": "true"
+        },
+        {
+          "name": "DynWhere",
+          "value": "true"
+        },
+        {
+          "name": "Tables"
+        },
+        {
+          "name": "Client",
+          "value": "true"
+        }
+      ]
+    },
+    {
+      "checkName": "CI_FIND_DYN_SQL",
+      "parameters": [
+        {
+          "name": "UsageOfADBCClasses",
+          "value": "true"
+        },
+        {
+          "name": "UsageOfClasses"
+        },
+        {
+          "name": "FindingGranularity",
+          "value": "1"
+        }
+      ]
+    },
+    {
+      "checkName": "CI_AMDP_HDB_MIGRATION"
+    },
+    {
+      "checkName": "SLIN_MAIN",
+      "parameters": [
+        {
+          "name": "StandardOrCustom",
+          "value": "1"
+        },
+        {
+          "name": "SubroutineInterfaces",
+          "value": "true"
+        },
+        {
+          "name": "FunctionInterfaces",
+          "value": "true"
+        },
+        {
+          "name": "ExternalProgramInterfaces",
+          "value": "true"
+        },
+        {
+          "name": "LoadSizes",
+          "value": "true"
+        },
+        {
+          "name": "Authorizations",
+          "value": "true"
+        },
+        {
+          "name": "GuiStatus",
+          "value": "true"
+        },
+        {
+          "name": "SetGetParameters",
+          "value": "true"
+        },
+        {
+          "name": "MessageStatements",
+          "value": "true"
+        },
+        {
+          "name": "Strings",
+          "value": "true"
+        },
+        {
+          "name": "CurrencyFields",
+          "value": "true"
+        },
+        {
+          "name": "FieldAttributes",
+          "value": "true"
+        },
+        {
+          "name": "SyntaxCheckWarnings",
+          "value": "true"
+        },
+        {
+          "name": "Internationalization",
+          "value": "true"
+        },
+        {
+          "name": "SuperfluousStatements",
+          "value": "true"
+        },
+        {
+          "name": "ProblematicStatements",
+          "value": "true"
+        },
+        {
+          "name": "StructureEnhancements",
+          "value": "true"
+        },
+        {
+          "name": "OutdatedStatements",
+          "value": "false"
+        },
+        {
+          "name": "CrossProgramChecks",
+          "value": "false"
+        },
+        {
+          "name": "ProgrammingGuidelines",
+          "value": "false"
+        }
+      ]
+    },
+    {
+      "checkName": "ABAP_CLOUD_PRECHECK_CHANGES"
+    }
+  ]
+}

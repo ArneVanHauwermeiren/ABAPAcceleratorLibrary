@@ -7,6 +7,7 @@ CLASS ycl_al_messages_factory DEFINITION
   PUBLIC FINAL
   CREATE PUBLIC.
 
+
   PUBLIC SECTION.
     "! Creates a collection of messages from an `if_xco_messages` instance.
     "!
@@ -28,6 +29,12 @@ CLASS ycl_al_messages_factory DEFINITION
     "! @parameter result     | The created collection of messages as a `yif_al_messages` instance.
     METHODS create_from_bapirettab IMPORTING bapirettab    TYPE bapirettab
                                    RETURNING VALUE(result) TYPE REF TO yif_al_messages.
+    "! Creates a collection of messages from a table of messages type yif_al_message.
+    "!
+    "! @parameter messages | The table of yif_al_message to be converted into a collection of messages.
+    "! @parameter result     | The created collection of messages as a `yif_al_messages` instance.
+    METHODS create_from_message_table IMPORTING messages TYPE yif_al_messages=>types-messages
+                                      RETURNING VALUE(result) TYPE REF TO yif_al_messages.
 
 ENDCLASS.
 
@@ -51,6 +58,14 @@ CLASS ycl_al_messages_factory IMPLEMENTATION.
       APPEND message_factory->create_from_bapiret2( bapiret2 ) TO sxco_t_messages.
     ENDLOOP.
 
+    result = create_from_sxco_t_messages( sxco_t_messages ).
+  ENDMETHOD.
+
+  METHOD create_from_message_table.
+    DATA sxco_t_messages TYPE sxco_t_messages.
+    LOOP AT messages INTO DATA(message).
+        APPEND message TO sxco_t_messages.
+    ENDLOOP.
     result = create_from_sxco_t_messages( sxco_t_messages ).
   ENDMETHOD.
 ENDCLASS.

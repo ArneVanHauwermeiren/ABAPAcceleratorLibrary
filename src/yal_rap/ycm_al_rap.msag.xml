@@ -3,20 +3,20 @@
  <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
   <asx:values>
    <T100A>
-    <ARBGB>ZCM_AL_RAP</ARBGB>
+    <ARBGB>YCM_AL_RAP</ARBGB>
     <MASTERLANG>E</MASTERLANG>
     <STEXT>Messages for RAP</STEXT>
    </T100A>
    <T100>
     <T100>
      <SPRSL>E</SPRSL>
-     <ARBGB>ZCM_AL_RAP</ARBGB>
+     <ARBGB>YCM_AL_RAP</ARBGB>
      <MSGNR>000</MSGNR>
      <TEXT>Er is iets misgelopen...</TEXT>
     </T100>
     <T100>
      <SPRSL>E</SPRSL>
-     <ARBGB>ZCM_AL_RAP</ARBGB>
+     <ARBGB>YCM_AL_RAP</ARBGB>
      <MSGNR>001</MSGNR>
      <TEXT>Verplicht veld &amp;1!</TEXT>
     </T100>

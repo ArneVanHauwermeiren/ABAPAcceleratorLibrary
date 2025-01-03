@@ -6,6 +6,7 @@ CLASS ycl_al_message_factory DEFINITION
   PUBLIC FINAL
   CREATE PUBLIC.
 
+
   PUBLIC SECTION.
 
     "! Factory method to create a message object from the provided `if_xco_message` instance.

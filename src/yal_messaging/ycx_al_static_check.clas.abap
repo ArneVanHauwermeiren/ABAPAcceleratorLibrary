@@ -5,6 +5,7 @@ CLASS ycx_al_static_check DEFINITION
 
   PUBLIC SECTION.
 
+
     INTERFACES if_t100_dyn_msg .
     INTERFACES if_t100_message .
 
@@ -19,14 +20,7 @@ CLASS ycx_al_static_check DEFINITION
         messages TYPE REF TO yif_al_messages READ-ONLY.
 
     METHODS:
-        constructor IMPORTING textid   LIKE if_t100_message=>t100key OPTIONAL
-                              previous LIKE previous OPTIONAL
-                              ty type SYMSGTY DEFAULT xco_cp_message=>type->error->value
-                              v1 type any optional
-                              v2 type any optional
-                              v3 type any optional
-                              v4 type any optional
-                              messages TYPE REF TO yif_al_messages OPTIONAL.
+        constructor IMPORTING messages TYPE REF TO yif_al_messages.
 PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.
@@ -35,29 +29,24 @@ ENDCLASS.
 
 CLASS ycx_al_static_check IMPLEMENTATION.
   METHOD constructor ##ADT_SUPPRESS_GENERATION.
-    super->constructor( previous = previous ).
+    super->constructor( ).
     CLEAR me->textid.
 
-    IF textid IS INITIAL.
-      if_t100_message~t100key = if_t100_message=>default_textid.
-    ELSE.
-      if_t100_message~t100key = textid.
-    ENDIF.
+    DATA(message_table) = messages->get_messages( ).
+    DATA(last_message) = message_table[ lines( message_table ) ].
 
-    me->ty       = ty.
-    me->v1       = CONV #( v1 ).
-    me->v2       = CONV #( v2 ).
-    me->v3       = CONV #( v3 ).
-    me->v4       = CONV #( v4 ).
+    if_t100_message~t100key = VALUE #( msgid = last_message->if_xco_message~value-msgid
+                                       msgno = last_message->if_xco_message~value-msgno
+                                       attr1 = 'V1'
+                                       attr2 = 'V2'
+                                       attr3 = 'V3'
+                                       attr4 = 'V4' ).
 
+    ty = last_message->if_xco_message~value-msgty.
+    v1 = last_message->if_xco_message~value-msgv1.
+    v2 = last_message->if_xco_message~value-msgv2.
+    v3 = last_message->if_xco_message~value-msgv3.
+    v4 = last_message->if_xco_message~value-msgv4.
     me->messages = messages.
-    me->messages->add_message(
-        NEW ycl_al_message_factory( )->create_from_bapiret2( VALUE #( id         = if_t100_message~t100key-msgid
-                                                                      type       = ty
-                                                                      number     = if_t100_message~t100key-msgno
-                                                                      message_v1 = v1
-                                                                      message_v2 = v2
-                                                                      message_v3 = v3
-                                                                      message_v4 = v4 ) ) ).
   ENDMETHOD.
 ENDCLASS.

@@ -2,6 +2,7 @@ CLASS ycl_al_abap_structdescr DEFINITION
   PUBLIC FINAL
   CREATE PUBLIC.
 
+
   PUBLIC SECTION.
     "!
     "! Constructor for initializing the structure descriptor.
@@ -20,13 +21,13 @@ CLASS ycl_al_abap_structdescr DEFINITION
     "!
     "! Retrieves the structure descriptor.
     "!
-    "! @parameter descriptor | The structure descriptor.
+    "! @parameter result | The structure descriptor.
     METHODS get_descriptor RETURNING VALUE(result) TYPE REF TO cl_abap_structdescr.
 
     "!
     "! Creates a new structure of the type defined by the structure descriptor.
     "!
-    "! @parameter structure | The newly created structure instance.
+    "! @parameter result | The newly created structure instance.
     METHODS create_structure RETURNING VALUE(result) TYPE REF TO data.
 
     "!
@@ -34,8 +35,8 @@ CLASS ycl_al_abap_structdescr DEFINITION
     "! in deep structures.
     "! This only works for nested structures/includes, <strong>not tables</strong>.
     "!
-    "! @parameter components | A table containing all components (fields and nested structures).
-    METHODS get_all_subcomp_of_structdescr RETURNING VALUE(result) TYPE abap_component_tab.
+    "! @parameter result | A table containing all components (fields and nested structures).
+    METHODS get_all_subcomponents RETURNING VALUE(result) TYPE abap_component_tab.
 
   PRIVATE SECTION.
     "!
@@ -66,11 +67,11 @@ CLASS ycl_al_abap_structdescr IMPLEMENTATION.
     CREATE DATA result TYPE HANDLE structure_descriptor.
   ENDMETHOD.
 
-  METHOD get_all_subcomp_of_structdescr.
+  METHOD get_all_subcomponents.
     LOOP AT structure_descriptor->get_components( ) INTO DATA(component).
       IF component-type IS INSTANCE OF cl_abap_structdescr.
         DATA(sub_component_structdescr) = NEW ycl_al_abap_structdescr( CAST cl_abap_structdescr( component-type ) ).
-        APPEND LINES OF sub_component_structdescr->get_all_subcomp_of_structdescr( ) TO result.
+        APPEND LINES OF sub_component_structdescr->get_all_subcomponents( ) TO result.
       ELSE.
         APPEND component TO result.
       ENDIF.

@@ -6,6 +6,7 @@
 INTERFACE yif_al_messages
   PUBLIC.
 
+
   INTERFACES if_xco_messages.
   INTERFACES if_xco_news.
 

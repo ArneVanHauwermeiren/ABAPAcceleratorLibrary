@@ -6,10 +6,11 @@ CLASS ycl_al_messages DEFINITION
   PUBLIC FINAL
   CREATE PUBLIC.
 
-  PUBLIC SECTION.
 
+  PUBLIC SECTION.
     INTERFACES yif_al_messages.
-    ALIASES types FOR yif_al_messages~types.
+
+    ALIASES types        FOR yif_al_messages~types.
     ALIASES get_messages FOR yif_al_messages~get_messages.
 
     "! Constructor to initialize the message collection
@@ -18,29 +19,28 @@ CLASS ycl_al_messages DEFINITION
     METHODS constructor IMPORTING xco_messages TYPE REF TO if_xco_messages.
 
   PRIVATE SECTION.
-
     "! Internal storage for the message collection
     DATA value TYPE yif_al_messages~types-messages.
 
 ENDCLASS.
 
 
-
 CLASS ycl_al_messages IMPLEMENTATION.
   METHOD constructor.
     DATA(message_factory) = NEW ycl_al_message_factory( ).
     LOOP AT xco_messages->value INTO DATA(xco_message).
-      APPEND MESSAGE_FACTORY->CREATE_FROM_XCO_MESSAGE( XCO_MESSAGE ) TO VALUE.
+      APPEND message_factory->create_from_xco_message( xco_message ) TO value.
     ENDLOOP.
+    if_xco_messages~value = get_messages( ).
   ENDMETHOD.
 
   METHOD yif_al_messages~get_messages.
-    RESULT = VALUE.
+    result = value.
   ENDMETHOD.
 
   METHOD yif_al_messages~add_message.
-    APPEND MESSAGE TO VALUE.
-    IF_XCO_MESSAGES~VALUE = GET_MESSAGES( ).
+    APPEND message TO value.
+    if_xco_messages~value = get_messages( ).
   ENDMETHOD.
 
   METHOD yif_al_messages~remove_duplicates.
@@ -53,11 +53,11 @@ CLASS ycl_al_messages IMPLEMENTATION.
       ENDIF.
     ENDLOOP.
 
-    IF_XCO_MESSAGES~VALUE = GET_MESSAGES( ).
+    if_xco_messages~value = get_messages( ).
   ENDMETHOD.
 
   METHOD yif_al_messages~remove_message.
-    CHECK IF_XCO_MESSAGES~VALUE IS NOT INITIAL.
+    CHECK if_xco_messages~value IS NOT INITIAL.
 
     DATA(existing_messages) = get_messages( ).
 
@@ -68,7 +68,8 @@ CLASS ycl_al_messages IMPLEMENTATION.
       ENDIF.
     ENDLOOP.
 
-    VALUE = NEW_MESSAGES.    IF_XCO_MESSAGES~VALUE = VALUE.
+    value = new_messages.
+    if_xco_messages~value = value.
   ENDMETHOD.
 
   METHOD yif_al_messages~contains.
@@ -138,10 +139,10 @@ CLASS ycl_al_messages IMPLEMENTATION.
     SORT compared_messages.
 
     LOOP AT current_messages INTO DATA(current_message).
-        IF NOT current_message->equals( compared_messages[ sy-tabix ] ).
-            result = abap_false.
-            RETURN.
-        ENDIF.
+      IF NOT current_message->equals( compared_messages[ sy-tabix ] ).
+        result = abap_false.
+        RETURN.
+      ENDIF.
     ENDLOOP.
 
     result = abap_true.
@@ -149,13 +150,13 @@ CLASS ycl_al_messages IMPLEMENTATION.
 
   METHOD yif_al_messages~get_messages_of_type.
     DATA new_messages TYPE types-messages.
+
     LOOP AT get_messages( ) INTO DATA(message).
-        IF message->is_type( type ).
-            APPEND message TO new_messages.
-        ENDIF.
+      IF message->is_type( type ).
+        APPEND message TO new_messages.
+      ENDIF.
     ENDLOOP.
 
-    result = new ycl_al_messages_factory( )->create_from_sxco_t_messages( new_messages ).
+    result = NEW ycl_al_messages_factory( )->create_from_message_table( new_messages ).
   ENDMETHOD.
-
 ENDCLASS.
